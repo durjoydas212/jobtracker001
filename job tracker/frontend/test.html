@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .hero-visual {
+        position: relative;
+        width: 100%;
+        max-width: 640px;
+        height: 460px;
+        margin-left: auto;
+        margin-right: auto;
+        perspective: 1200px;
+        transform-style: preserve-3d;
+      }
+
+      .hero-visual .vfx {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(30px);
+        opacity: 0.65;
+        pointer-events: none;
+      }
+
+      .glow-1 {
+        width: 180px;
+        height: 180px;
+        background: rgba(47, 134, 255, 0.28);
+        top: 40px;
+        left: 40px;
+        animation: floatGlow 6s ease-in-out infinite;
+      }
+
+      .glow-2 {
+        width: 220px;
+        height: 220px;
+        background: rgba(91, 108, 255, 0.18);
+        bottom: 20px;
+        right: 20px;
+        animation: floatGlow 7s ease-in-out infinite reverse;
+      }
+
+      .server {
+        position: absolute;
+        width: 120px;
+        height: 220px;
+        border-radius: 18px;
+        background: linear-gradient(180deg, #161d31, #0b1020);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        overflow: hidden;
+        transform: translateZ(40px);
+      }
+
+      .server::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.05),
+          transparent
+        );
+        transform: translateX(-100%);
+        animation: shine 4s linear infinite;
+      }
+
+      .server span {
+        display: block;
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        height: 4px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #2f86ff, #5b6cff);
+        box-shadow: 0 0 14px rgba(47, 134, 255, 0.75);
+        animation: pulseBar 2s ease-in-out infinite;
+      }
+
+      .server span:nth-child(1) {
+        top: 50px;
+      }
+      .server span:nth-child(2) {
+        top: 96px;
+        animation-delay: 0.25s;
+      }
+      .server span:nth-child(3) {
+        top: 142px;
+        animation-delay: 0.5s;
+      }
+
+      .server-1 {
+        right: 230px;
+        top: 70px;
+        animation: levitate 5s ease-in-out infinite;
+      }
+
+      .server-2 {
+        right: 110px;
+        top: 30px;
+        height: 260px;
+        animation: levitate 6s ease-in-out infinite reverse;
+      }
+
+      .shield,
+      .lock,
+      .cloud {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 24px;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.32);
+        transition: transform 0.15s ease;
+      }
+
+      .shield {
+        width: 150px;
+        height: 150px;
+        right: 145px;
+        bottom: 62px;
+        background: linear-gradient(
+          135deg,
+          rgba(47, 134, 255, 0.95),
+          rgba(91, 108, 255, 0.9)
+        );
+        transform: rotate(-8deg) translateZ(60px);
+      }
+
+      .shield i {
+        font-size: 74px;
+        color: #fff;
+      }
+
+      .lock {
+        width: 125px;
+        height: 125px;
+        right: 0;
+        bottom: 100px;
+        background: linear-gradient(180deg, #d9dde6, #8c96a8);
+        transform: translateZ(50px);
+      }
+
+      .lock i {
+        font-size: 64px;
+        color: #ffffff;
+      }
+
+      .cloud {
+        width: 170px;
+        height: 110px;
+        left: 40px;
+        bottom: 40px;
+        background: linear-gradient(
+          135deg,
+          rgba(10, 16, 36, 0.85),
+          rgba(22, 29, 49, 0.95)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transform: translateZ(30px);
+      }
+
+      .cloud i {
+        font-size: 54px;
+        color: #76b7ff;
+      }
+
+      @keyframes levitate {
+        0%,
+        100% {
+          transform: translateY(0px) translateZ(40px);
+        }
+        50% {
+          transform: translateY(-12px) translateZ(40px);
+        }
+      }
+
+      @keyframes floatGlow {
+        0%,
+        100% {
+          transform: translateY(0px) scale(1);
+        }
+        50% {
+          transform: translateY(-10px) scale(1.06);
+        }
+      }
+
+      @keyframes pulseBar {
+        0%,
+        100% {
+          opacity: 0.7;
+          transform: scaleX(0.98);
+        }
+        50% {
+          opacity: 1;
+          transform: scaleX(1.03);
+        }
+      }
+
+      @keyframes shine {
+        0% {
+          transform: translateX(-100%);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      @media (max-width: 991px) {
+        .hero-visual {
+          height: 360px;
+          max-width: 100%;
+        }
+
+        .server-1 {
+          right: 190px;
+          top: 60px;
+        }
+
+        .server-2 {
+          right: 80px;
+          top: 35px;
+        }
+
+        .shield {
+          right: 115px;
+          bottom: 56px;
+          width: 130px;
+          height: 130px;
+        }
+
+        .shield i {
+          font-size: 62px;
+        }
+
+        .lock {
+          width: 108px;
+          height: 108px;
+          bottom: 92px;
+        }
+
+        .lock i {
+          font-size: 54px;
+        }
+
+        .cloud {
+          width: 145px;
+          height: 95px;
+          left: 28px;
+          bottom: 30px;
+        }
+      }
+
+      @media (max-width: 575px) {
+        .hero-visual {
+          height: 300px;
+        }
+
+        .server {
+          width: 92px;
+          height: 180px;
+        }
+
+        .server span {
+          left: 14px;
+          right: 14px;
+          height: 3px;
+        }
+
+        .server span:nth-child(1) {
+          top: 40px;
+        }
+        .server span:nth-child(2) {
+          top: 78px;
+        }
+        .server span:nth-child(3) {
+          top: 116px;
+        }
+
+        .server-1 {
+          right: 135px;
+          top: 50px;
+        }
+
+        .server-2 {
+          right: 55px;
+          top: 25px;
+          height: 205px;
+        }
+
+        .shield {
+          width: 104px;
+          height: 104px;
+          right: 78px;
+          bottom: 44px;
+        }
+
+        .shield i {
+          font-size: 50px;
+        }
+
+        .lock {
+          width: 86px;
+          height: 86px;
+          bottom: 72px;
+        }
+
+        .lock i {
+          font-size: 42px;
+        }
+
+        .cloud {
+          width: 120px;
+          height: 78px;
+          left: 12px;
+          bottom: 20px;
+        }
+
+        .cloud i {
+          font-size: 42px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero-visual" id="heroVisual">
+      <div class="vfx glow glow-1"></div>
+      <div class="vfx glow glow-2"></div>
+
+      <div class="server server-1"><span></span><span></span><span></span></div>
+
+      <div class="server server-2"><span></span><span></span><span></span></div>
+
+      <div class="shield">
+        <i class="fas fa-shield-halved"></i>
+      </div>
+
+      <div class="lock">
+        <i class="fas fa-lock"></i>
+      </div>
+
+      <div class="cloud">
+        <i class="fas fa-cloud"></i>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const hero = document.getElementById("heroVisual");
+
+        if (!hero) return;
+
+        document.addEventListener("mousemove", function (e) {
+          const x = (e.clientX / window.innerWidth - 0.5) * 20;
+          const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+          hero.style.transform = `rotateY(${x}deg) rotateX(${-y}deg) translateY(0px)`;
+        });
+
+        document.addEventListener("mouseleave", function () {
+          hero.style.transform = "rotateY(0deg) rotateX(0deg)";
+        });
+      });
+    </script>
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <section class="feature-wrap py-5">
+      <div class="container">
+        <div class="row g-4">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card text-center h-100">
+              <div class="feature-icon">
+                <i class="fa-solid fa-hdd"></i>
+              </div>
+              <h3 class="feature-title">LiteSpeed Web Servers</h3>
+              <p class="feature-text">
+                Boost performance with LiteSpeed servers and NVMe SSDs, offering
+                speeds up to 75x faster for an exceptional user experience.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card text-center h-100">
+              <div class="feature-icon">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <h3 class="feature-title">Advanced Security</h3>
+              <p class="feature-text">
+                Defend your site with our security suite against malware and
+                DDoS attacks for ultimate peace of mind.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card text-center h-100">
+              <div class="feature-icon">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <h3 class="feature-title">WebMail Email</h3>
+              <p class="feature-text">
+                Effortlessly create professional email addresses on cPanel,
+                enhancing your brand's communication.
+              </p>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card text-center h-100">
+              <div class="feature-icon">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <h3 class="feature-title">Free Unlimited SSL Certificates</h3>
+              <p class="feature-text">
+                Secure your website with free unlimited SSL certificates,
+                enhancing protection and visitor trust.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card text-center h-100">
+              <div class="feature-icon">
+                <i class="fa-solid fa-pen-nib"></i>
+              </div>
+              <h3 class="feature-title">Free Website Builder</h3>
+              <p class="feature-text">
+                Create stunning websites easily with our drag-and-drop builder,
+                offering limitless design possibilities.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="feature-card text-center h-100">
+              <div class="feature-icon">
+                <i class="fa-solid fa-gears"></i>
+              </div>
+              <h3 class="feature-title">1-Click 400+ Installer</h3>
+              <p class="feature-text">
+                Effortlessly install over 400+ popular applications with our
+                1-click installer for quick setup.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
