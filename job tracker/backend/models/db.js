@@ -1,5 +1,7 @@
-const sqlite3 = require("@libsql/sqlite3").verbose();
-const db = new sqlite3.Database(__dirname + "/../../database.db");
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
+
+const db = new sqlite3.Database(path.join(__dirname, "../../database.db"));
 
 db.serialize(() => {
   // ================= USERS TABLE =================
@@ -45,11 +47,6 @@ db.serialize(() => {
       tag TEXT
     )
   `);
-  db.run(`
-  UPDATE users 
-  SET password = '1234566' 
-  WHERE email = 'Brianb@allweatherseal.com'
-`);
 });
 
 module.exports = db;
